@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .checkout-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .delete-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Your Cart</h1>
+    </header>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+                <th>Delete</th> <!-- New Delete Column -->
+            </tr>
+        </thead>
+        <tbody id="cartTableBody">
+            <!-- Product details will be populated here -->
+        </tbody>
+    </table>
+
+    <button class="checkout-button" onclick="checkout()">Proceed to Checkout</button>
+
+    <script>
+        // Populate table with cart items from localStorage
+        function populateCart() {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            const cartTableBody = document.getElementById('cartTableBody');
+            cartTableBody.innerHTML = ''; // Clear previous contents
+
+            cartItems.forEach((item, index) => {
+                const totalPrice = (item.price * item.quantity).toFixed(2);
+                const row = `
+                    <tr>
+                        <td><img src="${item.image}" alt="${item.name}" style="width: 100px; height: auto;"></td>
+                        <td>${item.name}</td>
+                        <td>${item.description}</td>
+                        <td>$${item.price.toFixed(2)}</td>
+                        <td>${item.quantity}</td>
+                        <td>$${totalPrice}</td>
+                        <td><button class="delete-button" onclick="deleteItem(${index})">Delete</button></td> <!-- Delete Button -->
+                    </tr>
+                `;
+                cartTableBody.innerHTML += row;
+            });
+        }
+
+        // Function to handle delete item
+        function deleteItem(index) {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            cartItems.splice(index, 1); // Remove the item at the specified index
+            localStorage.setItem('cartItems', JSON.stringify(cartItems)); // Update localStorage
+            populateCart(); // Re-populate the cart to reflect changes
+        }
+
+        // Function to handle checkout
+        function checkout() {
+            const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            if (cartItems.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const totalAmount = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2);
+            alert(`You have successfully purchased items for a total of $${totalAmount}!`);
+            // Clear cart after checkout
+            localStorage.removeItem('cartItems');
+            // Redirect to a confirmation or home page
+            window.location.href = 'confirmation.html'; // Create this page to confirm the purchase
+        }
+
+        // Call the function to populate cart when page loads
+        window.onload = populateCart;
+    </script>
+</body>
+</html>

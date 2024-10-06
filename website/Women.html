@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Magic Tree Book Store</title>
+  <link rel="stylesheet" href="./home.css">
+  <style>
+    /* Styling for the float box */
+    .float-box {
+        width: 300px;
+        height: auto; /* Auto height to adjust to content */
+        padding: 10px;
+        background-color: #f9f9f9;
+        margin: 10px;
+        float: left;
+        border: 2px solid transparent; /* Border is invisible by default */
+        transition: transform 0.5s ease, background-color 0.5s ease; /* Transition for both transform and background color */
+        position: relative;
+    }
+
+    /* Add visible border on hover */
+    .float-box:hover {
+        background-color: #e0f7ff; /* Lightest blue background on hover */
+        transform: translateY(10px); /* Move the box down by 10px */
+    }
+
+    /* Image styling */
+    .float-box img {
+        width: 100%; /* Make the image take full width of the box */
+        height: auto;
+        display: block; /* Ensures the image behaves like a block element */
+        margin-bottom: 15px; /* Space between the image and text */
+    }
+
+    /* Styling for the text and button */
+    .float-box-content {
+        text-align: center; /* Center the text and button */
+    }
+
+    /* Button styling */
+    .float-box button {
+        padding: 10px 20px;
+        background-color: #ff0505;
+        color: white;
+        border: none;
+        cursor: pointer;
+        visibility: hidden; /* Hidden initially */
+        transition: visibility 0.3s ease; /* Smooth transition for visibility */
+    }
+
+    /* Show button on hover */
+    .float-box:hover button {
+        visibility: visible; /* Make the button visible when hovering on the box */
+    }
+
+    /* Clearfix for clearing floats */
+    .clearfix {
+        clear: both;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="logo.png" alt="Magic Tree Logo">
+        <h1>Fashion Store</h1>
+      </div>
+      <ul class="nav-links">
+        <li><a href="./home.html">Home</a></li>
+        <li><a href="./men.html">Men</a></li>
+        <li><a href="./Women.html">Women</a></li>
+        
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+      <div class="search-bar">
+        <input type="text" placeholder="Search...">
+        
+      </div>
+      <div class="user-actions">
+        <a href="./cart.html">Cart</a>
+        <a href="#">Logout</a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="content-background"></div>
+
+  <!-- Product Section -->
+  <div class="float-box">
+      <img src="./photo1.jpg" alt="Image">
+      <div class="float-box-content">
+          <p style="color: red;">Wrap Top</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <p style="color: red;">$6.5</p>
+          <a href="womendetails.html?item=Wrap Top"><button>Order Now</button></a>
+      </div>
+  </div>
+
+  <div class="float-box">
+      <img src="./photo2.jpg" alt="Image">
+      <div class="float-box-content">
+          <p style="color: red;">Tunic Top</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <p style="color: red;">$6.5</p>
+          <a href="womendetails.html?item=Tunic Top"><button>Order Now</button></a>
+      </div>
+  </div>
+
+  <div class="float-box">
+      <img src="./photo3.jpg" alt="Image">
+      <div class="float-box-content">
+          <p style="color: red;">Ruffled Top</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          <p style="color: red;">$6.5</p>
+          <a href="womendetails.html?item=Ruffled Top"><button>Order Now</button></a>
+      </div>
+  </div>
+
+  <div class="clearfix"></div>
+</body>
+</html>

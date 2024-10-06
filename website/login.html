@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Login to your account</h2>
+            <form>
+                <div class="input-box">
+                    <label for="username"><i class="fa fa-user"></i> Username</label>
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+                <div class="input-box">
+                    <label for="password"><i class="fa fa-lock"></i> Password</label>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <div class="button">
+                    <button onclick="LoginValidation()">Login</button>
+                </div>
+                <div class="register">
+                    <a href="./Registration.html">New User ? register</a>
+                </div> 
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    function LoginValidation(){
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        if(username=="Nicky"){
+            if(password=="1234")
+            {
+                location.href="home.html"
+            }
+            else{
+                alert("Incorrect Password")
+            }
+        }
+        else{
+            alert("Incorrect Username")
+        }
+    }
+</script>
+</html>
+ 

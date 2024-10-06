@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .product-container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .product-details {
+            margin: 15px 0;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .quantity-controls button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .quantity-controls input {
+            width: 50px;
+            text-align: center;
+            margin: 0 5px;
+        }
+
+        button.order {
+            padding: 10px 20px;
+            background-color: #ff0505;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="product-container">
+    <img id="product-image" src="" alt="Product Image">
+    <div class="product-details">
+        <h2 id="product-name"></h2>
+        <p id="product-description"></p>
+        <p id="product-price"></p>
+    </div>
+    
+    <div class="quantity-controls">
+        <button id="decrease-qty">-</button>
+        <input type="number" id="quantity" value="1" min="1">
+        <button id="increase-qty">+</button>
+    </div>
+    <button class="order" id="order-button">Add to Cart</button>
+</div>
+
+<script>
+    // Function to get query parameters
+    function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+    }
+
+    // Load product details from query parameters
+    window.onload = function() {
+        const productName = getQueryParam('name');
+        const productDescription = getQueryParam('description');
+        const productPrice = getQueryParam('price');
+        const productImage = getQueryParam('image');
+
+        document.getElementById('product-name').innerText = productName;
+        document.getElementById('product-description').innerText = productDescription;
+        document.getElementById('product-price').innerText = `$${productPrice}`;
+        document.getElementById('product-image').src = productImage;
+
+        // Set up quantity controls
+        const qtyInput = document.getElementById('quantity');
+        document.getElementById('increase-qty').onclick = function() {
+            qtyInput.value = parseInt(qtyInput.value) + 1;
+        };
+        document.getElementById('decrease-qty').onclick = function() {
+            if (parseInt(qtyInput.value) > 1) {
+                qtyInput.value = parseInt(qtyInput.value) - 1;
+            }
+        };
+
+        // Set up order button action
+        
+    
+
+   
+
+        // Set up order button action
+        document.getElementById('order-button').onclick = function() {
+            const quantity = qtyInput.value;
+            const cartItem = {
+                name: productName,
+                description: productDescription,
+                price: parseFloat(productPrice),
+                image: productImage,
+                quantity: parseInt(quantity)
+            };
+
+            // Get current cart items from localStorage
+            let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+            // Check if the item already exists in the cart
+            const existingItemIndex = cartItems.findIndex(item => item.name === productName);
+            if (existingItemIndex !== -1) {
+                // Update quantity if it already exists
+                cartItems[existingItemIndex].quantity += parseInt(quantity);
+            } else {
+                // Add new item
+                cartItems.push(cartItem);
+            }
+
+            // Save updated cart items to localStorage
+            localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            alert(`${quantity} ${productName}(s) added to the cart!`);
+            window.location.href = 'cart.html'; // Redirect to cart page
+        };
+    }
+</script>
+
+</script>
+
+</body>
+</html>

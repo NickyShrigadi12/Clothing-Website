@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <link rel="stylesheet" href="./home.css">
+  <style>
+    .cart-container {
+      margin: 20px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    .cart-total {
+      margin-top: 20px;
+      text-align: right;
+    }
+    .checkout-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .checkout-btn:hover {
+      background-color: #45a049;
+    }
+    .delete-btn {
+      color: red;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="logo.png" alt="Magic Tree Logo">
+        <h1>Fashion Store</h1>
+      </div>
+      <ul class="nav-links">
+        <li><a href="./home.html">Home</a></li>
+        <li><a href="./men.html">Men</a></li>
+        <li><a href="./women.html">Women</a></li>
+        <li><a href="./kids.html">Kids</a></li>
+        <li><a href="#">Contact Us</a></li>
+      </ul>
+      <div class="search-bar">
+        <input type="text" placeholder="Search...">
+        <button><img src="search-icon.png" alt="Search"></button>
+      </div>
+      <div class="user-actions">
+        <a href="./cart.html"><img src="cart-icon.png" alt="Cart"></a>
+        <a href="./login.html"><img src="login-icon.png" alt="Login"></a>
+      </div>
+    </nav>
+  </header>
+
+  <div class="cart-container">
+    <h1>Shopping Cart</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Image</th>
+          <th>Product</th>
+          <th>Size</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Sub-Total</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="cart-items"></tbody>
+    </table>
+    <div class="cart-total">
+      <h2>Total: ₹<span id="cart-total">0</span></h2>
+      <button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+  </div>
+
+  <script>
+    function renderCartItems() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const cartItemsContainer = document.getElementById('cart-items');
+      const cartTotalElement = document.getElementById('cart-total');
+      cartItemsContainer.innerHTML = ''; // Clear existing cart items
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const subTotal = item.price * item.quantity;
+        total += subTotal;
+
+        cartItemsContainer.innerHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td><img src="${item.image}" alt="${item.name}" style="width: 100px; height: auto;"></td>
+            <td>${item.name}</td>
+            <td>${item.size}</td>
+            <td>₹${item.price.toFixed(2)}</td>
+            <td>${item.quantity}</td>
+            <td>₹${subTotal.toFixed(2)}</td>
+            <td><button class="delete-btn" onclick="removeItem(${index})">Delete</button></td>
+          </tr>
+        `;
+      });
+
+      cartTotalElement.textContent = total.toFixed(2);
+    }
+
+    function removeItem(index) {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      cart.splice(index, 1); // Remove the item at the specified index
+      localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
+      renderCartItems(); // Re-render the cart
+    }
+
+    window.onload = renderCartItems;
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Detail</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+    .product-detail {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 50px;
+    }
+    .product-detail img {
+      width: 300px;
+      height: auto;
+    }
+    .product-info {
+      max-width: 500px;
+    }
+    .product-info h2 {
+      color: red;
+    }
+    .product-info p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .quantity-controls button {
+      padding: 10px;
+      background-color: #ff0505;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .quantity-controls span {
+      margin: 0 10px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Product Details</h1>
+  </header>
+  
+  <section class="product-detail">
+    <img src="./photo1.jpg" id="productImage" alt="Product Image">
+    
+    <div class="product-info">
+      <h2 id="productName">Product Name</h2>
+      <p id="productDescription">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+      <p style="color: red;" id="productPrice">$6.5</p>
+
+      <div class="quantity-controls">
+        <button onclick="decreaseQuantity()">-</button>
+        <span id="quantity">1</span>
+        <button onclick="increaseQuantity()">+</button>
+      </div>
+
+      <button style="margin-top: 20px;">Add to Cart</button>
+    </div>
+  </section>
+
+  <script>
+    // Get the product name from the URL
+    const params = new URLSearchParams(window.location.search);
+    const itemName = params.get('item');
+
+    // Update page content based on item
+    const productData = {
+      "Wrap Top": {
+        name: "Wrap Top",
+        description: "Delicious double patty burger with cheese and lettuce.",
+        price: "$6.5",
+        image: "./photo1.jpg"
+      },
+      "Tunic Top": {
+        name: "Tunic Top",
+        description: "Crispy chicken burger with spicy mayo and pickles.",
+        price: "$6.5",
+        image: "./photo2.jpg"
+      },
+      "Ruffled Top": {
+        name: "Ruffled Top",
+        description: "Spicy Mexican burger with jalapenos and guacamole.",
+        price: "$6.5",
+        image: "./photo3.jpg"
+      }
+    };
+
+    if (itemName && productData[itemName]) {
+      document.getElementById('productName').innerText = productData[itemName].name;
+      document.getElementById('productDescription').innerText = productData[itemName].description;
+      document.getElementById('productPrice').innerText = productData[itemName].price;
+      document.getElementById('productImage').src = productData[itemName].image;
+    }
+
+    let quantity = 1;
+
+    function increaseQuantity() {
+      quantity++;
+      document.getElementById('quantity').innerText = quantity;
+    }
+
+    function decreaseQuantity() {
+      if (quantity > 1) {
+        quantity--;
+        document.getElementById('quantity').innerText = quantity;
+      }
+    }
+
+    
+
+
+
+    <button style="margin-top: 20px;" onclick="addToCart()">Add to Cart</button>
+
+
+  // Function to handle the Add to Cart button click
+  function addToCart() {
+    const productName = document.getElementById('productName').innerText;
+    const productDescription = document.getElementById('productDescription').innerText;
+    const productPrice = document.getElementById('productPrice').innerText;
+    const productImage = document.getElementById('productImage').src;
+
+    // Redirect to cart page with product details passed as URL parameters
+    window.location.href = `cart.html?name=${encodeURIComponent(productName)}&description=${encodeURIComponent(productDescription)}&price=${encodeURIComponent(productPrice)}&image=${encodeURIComponent(productImage)}&quantity=${quantity}`;
+  }
+</script>
+
+  
+  
+</body>
+</html>
